@@ -126,3 +126,55 @@ class StudentService:
 
         print()
         print(tabulate(students, headers=headers, tablefmt="grid"))
+        
+    def update_student(self):
+
+        roll_no = input("Enter Roll Number to Update: ")
+
+        query = """
+        SELECT * FROM students
+        WHERE roll_no = %s
+        """
+
+        self.cursor.execute(query, (roll_no,))
+        student = self.cursor.fetchone()
+
+        if not student:
+            print("\n❌ Student Not Found.")
+            return
+
+        print("\nEnter New Details")
+
+        name = input("Name: ")
+        email = input("Email: ")
+        phone = input("Phone: ")
+        branch = input("Branch: ")
+        year = int(input("Year: "))
+        cgpa = float(input("CGPA: "))
+
+        update_query = """
+        UPDATE students
+        SET
+            name=%s,
+            email=%s,
+            phone=%s,
+            branch=%s,
+            year=%s,
+            cgpa=%s
+        WHERE roll_no=%s
+        """
+
+        values = (
+            name,
+            email,
+            phone,
+            branch,
+            year,
+            cgpa,
+            roll_no
+        )
+
+        self.cursor.execute(update_query, values)
+        self.connection.commit()
+
+        print("\n✅ Student Updated Successfully!")

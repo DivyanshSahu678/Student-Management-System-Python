@@ -66,7 +66,11 @@ def main():
         elif choice == "3":
             service.search_student()
             input("\nPress Enter to continue...")
-            
+        
+        elif choice == "4":
+            service.update_student()
+            input("\nPress Enter to continue...")
+        
         elif choice == "0":
             print("\nThank You 😊")
             break
