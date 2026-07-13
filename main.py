@@ -60,7 +60,13 @@ def main():
             )
 
             service.add_student(student)
-
+        elif choice == "2":
+            service.view_students()
+        
+        elif choice == "3":
+            service.search_student()
+            input("\nPress Enter to continue...")
+            
         elif choice == "0":
             print("\nThank You 😊")
             break
