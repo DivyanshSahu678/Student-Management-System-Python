@@ -1,0 +1,10 @@
+def show_menu():
+    print("\n" + "=" * 40)
+    print("   STUDENT MANAGEMENT SYSTEM")
+    print("=" * 40)
+    print("1. Add Student")
+    print("2. View Students")
+    print("3. Search Student")
+    print("4. Update Student")
+    print("5. Delete Student")
+    print("0. Exit")

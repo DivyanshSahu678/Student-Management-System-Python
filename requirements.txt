@@ -1,0 +1,9 @@
+bcrypt==5.0.0
+colorama==0.4.6
+markdown-it-py==4.2.0
+mdurl==0.1.2
+mysql-connector-python==9.7.0
+Pygments==2.20.0
+python-dotenv==1.2.2
+rich==15.0.0
+tabulate==0.10.0
