@@ -70,6 +70,10 @@ def main():
         elif choice == "4":
             service.update_student()
             input("\nPress Enter to continue...")
+            
+        elif choice == "5":
+            service.delete_student()
+            input("\nPress Enter to continue...")
         
         elif choice == "0":
             print("\nThank You 😊")

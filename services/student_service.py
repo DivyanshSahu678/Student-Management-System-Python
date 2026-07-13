@@ -178,3 +178,35 @@ class StudentService:
         self.connection.commit()
 
         print("\n✅ Student Updated Successfully!")
+    
+    def delete_student(self):
+
+        roll_no = input("Enter Roll Number to Delete: ")
+
+        query = """
+        SELECT * FROM students
+        WHERE roll_no = %s
+        """
+
+        self.cursor.execute(query, (roll_no,))
+        student = self.cursor.fetchone()
+
+        if not student:
+            print("\n❌ Student Not Found.")
+            return
+
+        confirm = input("Are you sure? (Y/N): ").strip().upper()
+
+        if confirm != "Y":
+            print("\n⚠️ Deletion Cancelled.")
+            return
+
+        delete_query = """
+        DELETE FROM students
+        WHERE roll_no = %s
+        """
+
+        self.cursor.execute(delete_query, (roll_no,))
+        self.connection.commit()
+
+        print("\n✅ Student Deleted Successfully!")
