@@ -8,12 +8,22 @@ class StudentService:
         self.connection = get_connection()
         self.cursor = self.connection.cursor()
 
+    import mysql.connector
+from database.connection import get_connection
+
+
+class StudentService:
+
+    def __init__(self):
+        self.connection = get_connection()
+        self.cursor = self.connection.cursor()
+
     def add_student(self, student):
 
         query = """
         INSERT INTO students
         (roll_no, name, email, phone, branch, year, cgpa)
-        VALUES (%s,%s,%s,%s,%s,%s,%s)
+        VALUES (%s, %s, %s, %s, %s, %s, %s)
         """
 
         values = (
@@ -26,7 +36,13 @@ class StudentService:
             student.cgpa
         )
 
-        self.cursor.execute(query, values)
-        self.connection.commit()
+        try:
+            self.cursor.execute(query, values)
+            self.connection.commit()
+            print("\n✅ Student Added Successfully!")
 
-        print("\n✅ Student Added Successfully!")
+        except mysql.connector.IntegrityError:
+            print("\n❌ Roll Number or Email already exists.")
+
+        except mysql.connector.Error as err:
+            print(f"\n❌ Database Error: {err}")
