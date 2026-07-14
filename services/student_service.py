@@ -1,3 +1,4 @@
+import mysql.connector
 from database.connection import get_connection
 from models import student
 from tabulate import tabulate
@@ -18,7 +19,7 @@ class StudentService:
     def __init__(self):
         self.connection = get_connection()
         self.cursor = self.connection.cursor()
-
+        
     def add_student(self, student):
 
         query = """
@@ -40,39 +41,33 @@ class StudentService:
         try:
             self.cursor.execute(query, values)
             self.connection.commit()
-            print("\n✅ Student Added Successfully!")
+            return True, "Student Added Successfully!"
 
         except mysql.connector.IntegrityError:
-            print("\n❌ Roll Number or Email already exists.")
+            return False, "Roll Number or Email already exists."
 
         except mysql.connector.Error as err:
-            print(f"\n❌ Database Error: {err}")
-    def view_students(self):
-            query = """
-                SELECT id, roll_no, name, branch, year, cgpa
-                FROM students
-                ORDER BY id;
-                """
-
-            self.cursor.execute(query)
-            students = self.cursor.fetchall()
-
-            if not students:
-                    print("\n❌ No students found.")
-                    return
-
-            headers = [
-                    "ID",
-                    "Roll No",
-                    "Name",
-                    "Branch",
-                    "Year",
-                    "CGPA"
-                ]
-
-            print()
-            print(tabulate(students, headers=headers, tablefmt="grid"))
+            return False, f"Database Error: {err}"
     
+    def view_students(self):
+
+        query = """
+        SELECT
+            roll_no,
+            name,
+            branch,
+            year,
+            cgpa,
+            email,
+            phone
+        FROM students
+        ORDER BY id
+        """
+
+        self.cursor.execute(query)
+
+        return self.cursor.fetchall()
+        
     def search_student(self):
 
         print("\n===== Search Student =====")
